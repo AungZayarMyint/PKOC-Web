@@ -12,6 +12,11 @@ router.get("/", (req, res) => {
 router.post(
   "/register",
   [
+    body("email")
+      .trim()
+      .isEmail()
+      .withMessage("Email is not valid")
+      .normalizeEmail(),
     body("name")
       .trim()
       .notEmpty()
@@ -29,11 +34,6 @@ router.post(
         }
         return true;
       }),
-    body("email")
-      .trim()
-      .isEmail()
-      .withMessage("Email is not valid")
-      .normalizeEmail(),
   ],
   authController.register
 );

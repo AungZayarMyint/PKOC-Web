@@ -66,14 +66,14 @@ exports.login = async (req, res, next) => {
     });
   }
 
-  const { name, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    //check name
-    const userDoc = await User.findOne({ name });
+    //check email
+    const userDoc = await User.findOne({ email });
 
     if (!userDoc) {
-      throw new Error("This username doesn't exists.");
+      throw new Error("This email doesn't exists.");
     }
 
     //check pwd
@@ -124,14 +124,14 @@ exports.adminLogin = async (req, res, next) => {
     });
   }
 
-  const { name, password } = req.body;
+  const { email, password } = req.body;
 
   try {
     //check name
-    const userDoc = await User.findOne({ name });
+    const userDoc = await User.findOne({ email });
 
     if (!userDoc) {
-      throw new Error("This username doesn't exists.");
+      throw new Error("This email doesn't exists.");
     }
 
     if (userDoc.role !== "admin") {

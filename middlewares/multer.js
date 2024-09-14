@@ -1,18 +1,13 @@
-const multer = require("multer");
+const express = require("express");
 const path = require("path");
+const bodyParser = require("body-parser");
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "../uploads/");
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
-  },
-});
+const middlewares = (app) => {
+  app.use(express.static(path.join(__dirname, "../public")));
+  app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 1024 * 1024 * 5 },
-}).array("images", 20);
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
+};
 
-module.exports = upload;
+module.exports = middlewares;
